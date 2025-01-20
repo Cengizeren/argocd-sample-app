@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluent-bit-logging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: main
+    chart: fluent-bit
+    helm:
+      releaseName: fluent-bit
+      valueFiles:
+        - values-override.yaml # Bu dosya ile istediğiniz değerleri override edeceksiniz.
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: logging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
