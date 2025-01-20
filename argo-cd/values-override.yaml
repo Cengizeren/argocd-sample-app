@@ -1,0 +1,12 @@
+config:
+  filters: |
+    [FILTER]
+        Name        record_modifier
+        Match       *
+        Record      cluster_name ${CLUSTER_NAME}
+
+    [FILTER]
+        Name            grep
+        Match           *
+        Exclude         log /(amqp:|postgresql:|mongodb:|redshift:)\/\/[^\/,]+:{1}[^{][^\/,][^}]+@{1}.*/
+
